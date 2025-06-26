@@ -1,0 +1,93 @@
+# Maven
+target/
+# !.mvn/wrapper/maven-wrapper.jar
+# .mvn/wrapper/maven-wrapper.properties
+# .mvn/wrapper/maven-wrapper-download.properties
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+# Logs
+logs/
+*.log
+
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.sw?
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Java classpath, build files
+*.class
+*.jar
+*.war
+*.ear
+
+# Jib (if using Docker caching locally)
+jib-cache/
+
+# Environment / Secrets
+.env
+.env.*
+*.key
+*.pem
+*.crt
+*.jks
+secrets/
+config/
+
+# Spring Boot dev files
+*.db
+*.h2.db
+*.mv.db
+*.trace.db
+
+# Test output
+surefire-reports/
+jacoco.exec
+
+# Coverage reports
+target/site/jacoco/
+coverage/
+coverage-report/
+*.lcov
+
+# Redis and Mail (optional local mounts)
+*.rdb
+maildev/
+
+# Docker and Kubernetes
+docker-compose.override.yml
+docker-compose.dev.yml
+docker-compose.yml
+# Dockerfile
+# .Dockerfile
+*.tar
+
+# Node (if frontend present in backend or combined build)
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+pnpm-lock.yaml
+.vite/
+dist/
+
+# Jib specific
+jib-output.json
+
+# IntelliJ Annotation Processor Cache
+.apt_generated/
+
+# VS Code specific
+.vscode/

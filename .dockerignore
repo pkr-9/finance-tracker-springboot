@@ -1,0 +1,47 @@
+# Ignore target build output (Maven)
+target/
+
+# Ignore IDE and OS-related files
+*.iml
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Ignore logs and local database/test files
+*.log
+*.db
+*.h2.db
+*.mv.db
+*.trace.db
+*.rdb
+*.tar
+*.exec
+
+# Ignore version control and metadata
+.git
+.gitignore
+
+# Ignore environment and secret files
+.env
+.env.*
+*.jks
+*.pem
+*.crt
+*.key
+
+# Ignore test and coverage reports
+coverage/
+jacoco.exec
+target/site/jacoco/
+
+# Ignore Docker-specific cache and dev overrides
+docker-compose.override.yml
+docker-compose.dev.yml
+jib-cache/
+jib-output.json
+
+# Ignore frontend artifacts if co-located
+node_modules/
+dist/
+build/
