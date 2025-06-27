@@ -5,6 +5,9 @@ spring:
     password: E1imNmA8AVpTd3Y5ti7dfZpTnk1PvQLp
     driver-class-name: org.postgresql.Driver
 
+  main:
+    web-application-type: servlet
+
   jpa:
     show-sql: true
     hibernate:
