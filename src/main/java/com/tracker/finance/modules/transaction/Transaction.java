@@ -1,10 +1,10 @@
 package com.tracker.finance.modules.transaction;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.tracker.finance.modules.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-// import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
@@ -17,11 +17,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Transaction {
 
-    // @Id
-    // @GeneratedValue(generator = "UUID")
-    // @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    // private UUID id;
-
     @Id
     @GeneratedValue
     @UuidGenerator
@@ -30,6 +25,9 @@ public class Transaction {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @Column(nullable = false)
+    private String title;
 
     @Column(nullable = false)
     private BigDecimal amount;
@@ -47,6 +45,20 @@ public class Transaction {
     private String notes;
 
     public enum TransactionType {
-        INCOME, EXPENSE
+        INCOME, EXPENSE;
+
+        @JsonCreator
+        public static TransactionType fromString(String value) {
+            if (value == null) {
+                return null;
+            }
+            // This loop allows for a case-insensitive match
+            for (TransactionType type : TransactionType.values()) {
+                if (type.name().equalsIgnoreCase(value)) {
+                    return type;
+                }
+            }
+            throw new IllegalArgumentException("Invalid value for TransactionType: " + value);
+        }
     }
 }

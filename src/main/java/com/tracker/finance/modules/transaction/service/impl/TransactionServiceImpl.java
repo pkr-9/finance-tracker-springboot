@@ -33,10 +33,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionDto findTransactionById(UUID id, String username) {
-        Transaction transaction = transactionRepository.findById(id)
+        Transaction transaction = transactionRepository.findByIdWithUser(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Transaction not found"));
-
-        // Authorization check
         if (!transaction.getUser().getUsername().equals(username)) {
             throw new AccessDeniedException("Unauthorized");
         }
@@ -55,7 +53,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionDto updateTransaction(UUID id, CreateTransactionRequest request, String username) {
-        Transaction transaction = transactionRepository.findById(id)
+        Transaction transaction = transactionRepository.findByIdWithUser(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Transaction not found"));
 
         if (!transaction.getUser().getUsername().equals(username))
@@ -67,7 +65,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void deleteTransaction(UUID id, String username) {
-        Transaction transaction = transactionRepository.findById(id)
+        Transaction transaction = transactionRepository.findByIdWithUser(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Transaction not found"));
         if (!transaction.getUser().getUsername().equals(username))
             throw new AccessDeniedException("Unauthorized");

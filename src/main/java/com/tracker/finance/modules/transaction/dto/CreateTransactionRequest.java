@@ -11,6 +11,9 @@ import java.time.LocalDate;
 
 @Data
 public class CreateTransactionRequest {
+    @NotEmpty
+    private String title;
+
     @NotNull
     @DecimalMin(value = "0.01")
     private BigDecimal amount;

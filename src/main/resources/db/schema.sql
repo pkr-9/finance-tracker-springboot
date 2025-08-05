@@ -1,3 +1,7 @@
+-- CREATE DATABASE financedb;
+-- \c financedb
+-- CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
 CREATE TABLE users (
     id UUID PRIMARY KEY,
     username VARCHAR(255) UNIQUE NOT NULL,
@@ -8,6 +12,7 @@ CREATE TABLE users (
 CREATE TABLE transactions (
     id UUID PRIMARY KEY,
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    title VARCHAR(255) NOT NULL,
     amount NUMERIC(19, 2) NOT NULL,
     type VARCHAR(255) NOT NULL,
     category VARCHAR(255) NOT NULL,

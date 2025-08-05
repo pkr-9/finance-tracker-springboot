@@ -1,10 +1,6 @@
 package com.tracker.finance.modules.auth.controller;
 
-// import com.tracker.finance.modules.user.dto.UpdateProfileRequest;
-// import com.tracker.finance.modules.user.dto.UserProfileDto;
-// import org.springframework.http.HttpStatus;
-// import org.springframework.security.core.annotation.AuthenticationPrincipal;
-// import org.springframework.security.core.userdetails.UserDetails;
+import com.tracker.finance.modules.user.dto.UserProfileDto;
 import com.tracker.finance.modules.user.service.UserService;
 import com.tracker.finance.modules.auth.dto.JwtResponse;
 import com.tracker.finance.modules.auth.dto.LoginRequest;
@@ -32,30 +28,17 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         String jwt = authService.login(loginRequest);
-        return ResponseEntity.ok(new JwtResponse(jwt));
+
+        // Fetch user details after successful login
+        UserProfileDto userProfile = userService.getCurrentUser(loginRequest.getUsername());
+
+        // Create the user info object for the response
+        JwtResponse.UserInfo userInfo = new JwtResponse.UserInfo(
+                userProfile.getId().toString(),
+                userProfile.getUsername(),
+                userProfile.getEmail());
+
+        // Return the new response object
+        return ResponseEntity.ok(new JwtResponse(jwt, userInfo));
     }
-
-    // @GetMapping("/me")
-    // public ResponseEntity<UserProfileDto> getCurrentUser(@AuthenticationPrincipal
-    // UserDetails userDetails) {
-    // UserProfileDto userProfile =
-    // authService.getCurrentUser(userDetails.getUsername());
-    // return ResponseEntity.ok(userProfile);
-    // }
-
-    // @PutMapping("/profile")
-    // public ResponseEntity<UserProfileDto> updateProfile(@AuthenticationPrincipal
-    // UserDetails userDetails,
-    // @Valid @RequestBody UpdateProfileRequest request) {
-    // UserProfileDto updatedUser =
-    // authService.updateProfile(userDetails.getUsername(), request);
-    // return ResponseEntity.ok(updatedUser);
-    // }
-
-    // @DeleteMapping("/profile")
-    // public ResponseEntity<?> deleteAccount(@AuthenticationPrincipal UserDetails
-    // userDetails) {
-    // authService.deleteAccount(userDetails.getUsername());
-    // return ResponseEntity.noContent().build();
-    // }
 }

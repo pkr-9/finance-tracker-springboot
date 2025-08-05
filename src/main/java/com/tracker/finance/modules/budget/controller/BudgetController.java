@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/budgets")
@@ -32,5 +33,22 @@ public class BudgetController {
             @AuthenticationPrincipal UserDetails userDetails) {
         BudgetDto newBudget = budgetService.addBudget(request, userDetails.getUsername());
         return new ResponseEntity<>(newBudget, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BudgetDto> updateBudget(
+            @PathVariable("id") UUID id,
+            @Valid @RequestBody CreateBudgetRequest request,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        BudgetDto updatedBudget = budgetService.updateBudget(id, request, userDetails.getUsername());
+        return ResponseEntity.ok(updatedBudget);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteBudget(
+            @PathVariable("id") UUID id,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        budgetService.deleteBudget(id, userDetails.getUsername());
+        return ResponseEntity.noContent().build();
     }
 }

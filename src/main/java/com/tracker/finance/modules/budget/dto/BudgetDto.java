@@ -14,4 +14,5 @@ public class BudgetDto {
     private String category;
     private BigDecimal limitAmount;
     private LocalDate month;
+    private BigDecimal spent;
 }

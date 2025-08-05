@@ -1,53 +1,40 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://dpg-d1d2niidbo4c73cb08p0-a.singapore-postgres.render.com:5432/financetracker_q2k7
-    username: financeuser
-    password: E1imNmA8AVpTd3Y5ti7dfZpTnk1PvQLp
-    driver-class-name: org.postgresql.Driver
-
   main:
     web-application-type: servlet
-
+  # --- Production Database Configuration using Environment Variables ---
+  datasource:
+    # The URL, username, and password will be provided by Render's environment variables.
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
   jpa:
-    show-sql: true
+    show-sql: true # You can set this to false in production to clean up logs
     hibernate:
+      # This setting ensures the database schema is updated automatically on startup.
       ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
+# --- Application-Specific Configuration ---
 app:
-  jwtSecret: ${APP_JWT_SECRET:qUChgJtRn774puTo+wi3dFYWh72ypl4rILdga9280BM=}
-  jwtExpirationMs: ${APP_JWT_EXPIRATION_MS:86400000} # 24 hours
+  # The JWT secret and expiration will be set via environment variables.
+  jwtSecret: ${APP_JWT_SECRET}
+  jwtExpirationMs: ${APP_JWT_EXPIRATION_MS:86400000} # Defaults to 24 hours if not set
+  # CORS origins will be set via an environment variable to allow your deployed frontend.
   cors:
-    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,https://finance-tracker-react-five.vercel.app}
+    allowed-origins: ${CORS_ALLOWED_ORIGINS}
 
-  jackson:
-    serialization:
-      indent_output: true
-
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-
+# --- Server Port Configuration ---
 server:
-  port: 8080
+  # Render expects applications to run on port 10000 by default, but it can often detect 8080.
+  # For best results, we can explicitly set it via an environment variable.
+  port: ${PORT:8080}
 
+# --- Logging Configuration ---
 logging:
   level:
-    root: DEBUG
-    org.springframework: DEBUG
-    org.springframework.boot.autoconfigure: DEBUG
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-
-# Enable full condition evaluation logging
-debug: true
-
----
-# Enable actuator endpoints (optional)
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
+    root: INFO # Set to INFO for cleaner production logs
+    org.springframework: INFO
+    org.hibernate.SQL: INFO # Set to ERROR or remove to hide SQL queries in logs

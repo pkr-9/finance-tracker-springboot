@@ -27,6 +27,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 user.getUsername(),
                 user.getPassword(),
                 new ArrayList<>() // For simplicity, no roles. Can be extended for Admin/User roles.
+        // Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")) // Grant a
+        // default role
+
         );
     }
 }

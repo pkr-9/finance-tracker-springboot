@@ -3,7 +3,6 @@ package com.tracker.finance.modules.transaction.dto;
 import com.tracker.finance.modules.transaction.Transaction;
 import lombok.Builder;
 import lombok.Data;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -12,6 +11,7 @@ import java.util.UUID;
 @Builder
 public class TransactionDto {
     private UUID id;
+    private String title;
     private BigDecimal amount;
     private Transaction.TransactionType type;
     private String category;

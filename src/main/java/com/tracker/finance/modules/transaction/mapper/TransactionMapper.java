@@ -11,6 +11,7 @@ public class TransactionMapper {
     public TransactionDto toDto(Transaction t) {
         return TransactionDto.builder()
                 .id(t.getId())
+                .title(t.getTitle())
                 .amount(t.getAmount())
                 .type(t.getType())
                 .category(t.getCategory())
@@ -21,6 +22,7 @@ public class TransactionMapper {
 
     public Transaction fromRequest(CreateTransactionRequest r) {
         Transaction t = new Transaction();
+        t.setTitle(r.getTitle());
         t.setAmount(r.getAmount());
         t.setCategory(r.getCategory());
         t.setDate(r.getDate());
@@ -30,6 +32,7 @@ public class TransactionMapper {
     }
 
     public void updateFromRequest(Transaction t, CreateTransactionRequest r) {
+        t.setTitle(r.getTitle());
         t.setAmount(r.getAmount());
         t.setCategory(r.getCategory());
         t.setDate(r.getDate());
