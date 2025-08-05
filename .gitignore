@@ -44,7 +44,7 @@ jib-cache/
 *.crt
 *.jks
 secrets/
-config/
+# config/
 
 # Spring Boot dev files
 *.db
