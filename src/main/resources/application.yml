@@ -4,7 +4,7 @@ spring:
   # --- Production Database Configuration using Environment Variables ---
   datasource:
     # The URL, username, and password will be provided by Render's environment variables.
-    url: ${SPRING_DATASOURCE_URL}
+    url: jdbc:${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
